@@ -1,0 +1,1 @@
+rootProject.name = "next-oauth2-2025-02-26"
