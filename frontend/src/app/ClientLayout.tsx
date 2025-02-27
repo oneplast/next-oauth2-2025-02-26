@@ -7,10 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Moon, Sun } from "lucide-react";
+import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
+import { Home, LogIn, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 function ModelToggle() {
   const { setTheme } = useTheme();
@@ -42,6 +44,54 @@ function ModelToggle() {
 export function ClientLayout({
   children,
 }: React.ComponentProps<typeof NextThemesProvider>) {
+  const router = useRouter();
+
+  const {
+    setLoginMember,
+    isLogin,
+    loginMember,
+    removeLoginMember,
+    isLoginMemberPending,
+    isAdmin,
+    setNoLoginMember,
+  } = useLoginMember();
+
+  const loginMemberContextValue = {
+    loginMember,
+    setLoginMember,
+    removeLoginMember,
+    isLogin,
+    isLoginMemberPending,
+    isAdmin,
+    setNoLoginMember,
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoginMember({
+        id: 2,
+        createDate: "",
+        modifyDate: "",
+        nickname: "admin",
+      });
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (isLoginMemberPending) {
+    return (
+      <div className="flex-1 flex justify-center items-center text-muted-foreground">
+        인증 정보 로딩중...
+      </div>
+    );
+  }
+
+  const logout = () => {
+    removeLoginMember();
+    router.replace("/");
+  };
+
   return (
     <NextThemesProvider
       attribute="class"
@@ -49,17 +99,70 @@ export function ClientLayout({
       enableSystem
       disableTransitionOnChange
     >
-      <header className="flex p-2 gap-4">
-        <Button variant="link" asChild>
-          <Link href="/">홈</Link>
-        </Button>
-        <div className="flex-grow"></div>
-        <ModelToggle />
-      </header>
-      <main className="flex-1 flex flex-col">{children}</main>
-      <footer className="p-2 flex justify-center">
-        <span>푸터</span>
-      </footer>
+      <LoginMemberContext value={loginMemberContextValue}>
+        <header className="flex p-2">
+          <Button variant="link" asChild>
+            <Link href="/">
+              <Home />홈
+            </Link>
+          </Button>
+
+          {isAdmin && (
+            <Button variant="link" asChild>
+              <Link href="/adm">
+                <Settings />
+                관리자
+              </Link>
+            </Button>
+          )}
+
+          {isLogin && (
+            <Button variant="link" asChild>
+              <Link href="/member/me">
+                <User /> 내 정보
+              </Link>
+            </Button>
+          )}
+
+          {isLogin && (
+            <Button variant="link" onClick={logout}>
+              <LogOut />
+              로그아웃
+            </Button>
+          )}
+
+          {!isLogin && (
+            <Button variant="link" asChild>
+              <Link href="/adm/member/login">
+                <LogIn /> 관리자 로그인
+              </Link>
+            </Button>
+          )}
+          <div className="flex-grow"></div>
+          <ModelToggle />
+        </header>
+        <main className="flex-1 flex flex-col">{children}</main>
+        <footer className="p-2 flex justify-center">
+          <Button variant="link" asChild>
+            <Link href="/adm">
+              <Settings />
+              관리자
+            </Link>
+          </Button>
+
+          <Button variant="link" asChild>
+            <Link href="/adm/member/login">
+              <LogIn /> 관리자 로그인
+            </Link>
+          </Button>
+
+          <Button variant="link" asChild>
+            <Link href="/member/me">
+              <User />내 정보
+            </Link>
+          </Button>
+        </footer>
+      </LoginMemberContext>
     </NextThemesProvider>
   );
 }
