@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import client from "@/lib/backend/client";
 import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
 import { Home, LogIn, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
@@ -67,16 +68,13 @@ export function ClientLayout({
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLoginMember({
-        id: 2,
-        createDate: "",
-        modifyDate: "",
-        nickname: "admin",
-      });
-    }, 1000);
-
-    return () => clearTimeout(timeout);
+    client.GET("/api/v1/members/me").then((res) => {
+      if (res.error) {
+        setNoLoginMember();
+      } else {
+        setLoginMember(res.data);
+      }
+    });
   }, []);
 
   if (isLoginMemberPending) {
@@ -88,8 +86,10 @@ export function ClientLayout({
   }
 
   const logout = () => {
-    removeLoginMember();
-    router.replace("/");
+    client.DELETE("/api/v1/members/logout").then((res) => {
+      removeLoginMember();
+      router.replace("/");
+    });
   };
 
   return (
@@ -143,24 +143,7 @@ export function ClientLayout({
         </header>
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="p-2 flex justify-center">
-          <Button variant="link" asChild>
-            <Link href="/adm">
-              <Settings />
-              관리자
-            </Link>
-          </Button>
-
-          <Button variant="link" asChild>
-            <Link href="/adm/member/login">
-              <LogIn /> 관리자 로그인
-            </Link>
-          </Button>
-
-          <Button variant="link" asChild>
-            <Link href="/member/me">
-              <User />내 정보
-            </Link>
-          </Button>
+          <span>© 2025 글로그</span>
         </footer>
       </LoginMemberContext>
     </NextThemesProvider>
