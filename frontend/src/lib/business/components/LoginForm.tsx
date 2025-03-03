@@ -54,7 +54,7 @@ export default function LoginForm() {
         <input
           type="text"
           name="username"
-          className="p-2 border roudned-md bg-inherit"
+          className="p-2 border rounded-md bg-inherit"
           placeholder="아이디를 입력해주세요."
           autoComplete="off"
           autoFocus
