@@ -46,6 +46,10 @@ public class SecurityConfig {
                 )
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
                 .csrf(csrf -> csrf.disable())
+                .oauth2Login(oauth2Login -> {
+
+                        }
+                )
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(
