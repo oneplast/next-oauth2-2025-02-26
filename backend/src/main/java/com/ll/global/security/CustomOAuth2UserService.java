@@ -1,5 +1,7 @@
 package com.ll.global.security;
 
+import com.ll.domain.member.member.entity.Member;
+import com.ll.domain.member.member.service.MemberService;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+    private final MemberService memberService;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -29,6 +33,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String nickname = attributesProperties.get("nickname");
         String profileImgUrl = attributesProperties.get("profile_image");
         String username = providerTypeCode + "__" + oauthId;
+
+        Member member = this.memberService.modifyOrJoin(username, nickname);
 
         return new SecurityUser(
                 0,
