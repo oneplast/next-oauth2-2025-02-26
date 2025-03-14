@@ -2,7 +2,6 @@ package com.ll.global.security;
 
 import com.ll.domain.member.member.entity.Member;
 import com.ll.domain.member.member.service.MemberService;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -39,11 +38,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Member member = this.memberService.modifyOrJoin(username, nickname, profileImgUrl);
 
         return new SecurityUser(
-                0,
-                username,
+                member.getId(),
+                member.getUsername(),
                 "",
-                nickname,
-                List.of()
+                member.getNickname(),
+                member.getAuthorities()
         );
     }
 }
