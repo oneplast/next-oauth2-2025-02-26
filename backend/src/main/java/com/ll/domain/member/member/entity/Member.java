@@ -33,6 +33,8 @@ public class Member extends BaseTime {
     @Column(unique = true, length = 50)
     private String apiKey;
 
+    private String profileImgUrl;
+
     public String getName() {
         return this.nickname;
     }
@@ -66,5 +68,9 @@ public class Member extends BaseTime {
         }
 
         return authorities;
+    }
+
+    public String getProfileImgUrlOrDefault() {
+        return profileImgUrl == null ? "https://placehold.co/640x640?text=O_O" : profileImgUrl;
     }
 }

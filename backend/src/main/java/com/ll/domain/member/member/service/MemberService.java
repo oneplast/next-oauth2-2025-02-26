@@ -25,7 +25,7 @@ public class MemberService {
         return memberRepository.count();
     }
 
-    public Member join(String username, String password, String nickname) {
+    public Member join(String username, String password, String nickname, String profileImgUrl) {
         findByUsername(username)
                 .ifPresent(__ -> {
                     throw new IllegalArgumentException(
@@ -37,6 +37,7 @@ public class MemberService {
                 .password(password)
                 .nickname(nickname)
                 .apiKey(UUID.randomUUID().toString())
+                .profileImgUrl(profileImgUrl)
                 .build();
 
         return memberRepository.save(member);
@@ -98,19 +99,20 @@ public class MemberService {
         return memberRepository.findAll(pageRequest);
     }
 
-    public void modify(Member member, @NotBlank String nickname) {
+    public void modify(Member member, @NotBlank String nickname, String profileImgUrl) {
         member.setNickname(nickname);
+        member.setProfileImgUrl(profileImgUrl);
     }
 
-    public Member modifyOrJoin(String username, String nickname) {
+    public Member modifyOrJoin(String username, String nickname, String profileImgUrl) {
         Optional<Member> opMember = findByUsername(username);
 
         if (opMember.isPresent()) {
             Member member = opMember.get();
-            modify(member, nickname);
+            modify(member, nickname, profileImgUrl);
             return member;
         }
 
-        return join(username, "", nickname);
+        return join(username, "", nickname, profileImgUrl);
     }
 }
