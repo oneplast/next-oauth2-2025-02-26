@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -71,6 +72,6 @@ public class Member extends BaseTime {
     }
 
     public String getProfileImgUrlOrDefault() {
-        return profileImgUrl == null ? "https://placehold.co/640x640?text=O_O" : profileImgUrl;
+        return Objects.requireNonNullElse(profileImgUrl, "https://placehold.co/640x640?text=O_O");
     }
 }

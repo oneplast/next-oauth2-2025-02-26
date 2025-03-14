@@ -29,6 +29,7 @@ function createEmptyMember(): Member {
     createDate: "",
     modifyDate: "",
     nickname: "",
+    profileImgUrl: "",
   };
 }
 
