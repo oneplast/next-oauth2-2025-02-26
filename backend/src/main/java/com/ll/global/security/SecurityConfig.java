@@ -19,6 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     private final CustomAuthenticationFilter customAuthenticationFilter;
     private final CustomOAuth2AuthenticationSuccessHandler customOAuth2AuthenticationSuccessHandler;
+    private final CustomAuthorizationRequestResolver customAuthorizationRequestResolver;
 
     @Bean
     SecurityFilterChain baseSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -49,6 +50,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .oauth2Login(oauth2Login -> oauth2Login
                         .successHandler(customOAuth2AuthenticationSuccessHandler)
+                        .authorizationEndpoint(authorizationEndPoint -> authorizationEndPoint
+                                .authorizationRequestResolver(customAuthorizationRequestResolver))
                 )
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
