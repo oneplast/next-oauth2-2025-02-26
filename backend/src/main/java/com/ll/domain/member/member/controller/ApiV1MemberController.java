@@ -40,7 +40,8 @@ public class ApiV1MemberController {
             @NotBlank
             String password,
             @NotBlank
-            String nickname
+            String nickname,
+            String profileImgUrl
     ) {
     }
 

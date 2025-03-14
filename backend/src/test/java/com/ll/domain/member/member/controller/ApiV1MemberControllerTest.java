@@ -310,7 +310,7 @@ class ApiV1MemberControllerTest {
                 .andExpect(jsonPath("$.modifyDate").value(
                         Matchers.startsWith(actor.getModifyDate().toString().substring(0, 20)))
                 )
-                .andExpect(jsonPath("$.profileImgUrl").value(actor.getProfileImgUrl()));
+                .andExpect(jsonPath("$.profileImgUrl").value(actor.getProfileImgUrlOrDefault()));
     }
 
     @Test
@@ -338,7 +338,7 @@ class ApiV1MemberControllerTest {
                 .andExpect(jsonPath("$.modifyDate").value(
                         Matchers.startsWith(actor.getModifyDate().toString().substring(0, 20)))
                 )
-                .andExpect(jsonPath("$.profileImgUrl").value(actor.getProfileImgUrl()));
+                .andExpect(jsonPath("$.profileImgUrl").value(actor.getProfileImgUrlOrDefault()));
     }
 
     @Test
