@@ -331,6 +331,7 @@ export interface components {
             username: string;
             password: string;
             nickname: string;
+            profileImgUrl?: string;
         };
         PageDtoPostDto: {
             /** Format: int32 */
