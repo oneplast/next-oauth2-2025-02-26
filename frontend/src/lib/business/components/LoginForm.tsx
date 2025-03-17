@@ -1,12 +1,4 @@
 import { Button } from "@/components/ui/button";
-import client from "@/lib/backend/client";
-import { LoginMemberContext } from "@/stores/auth/loginMember";
-import { useRouter } from "next/navigation";
-import { use } from "react";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -16,6 +8,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import client from "@/lib/backend/client";
+import { useGlobalLoginMember } from "@/stores/auth/loginMember";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const loginFormSchema = z.object({
   username: z
@@ -33,7 +32,7 @@ const loginFormSchema = z.object({
 type LoginFormInputs = z.infer<typeof loginFormSchema>;
 
 export default function LoginForm() {
-  const { setLoginMember } = use(LoginMemberContext);
+  const { setLoginMember } = useGlobalLoginMember();
   const router = useRouter();
   const form = useForm<LoginFormInputs>({
     resolver: zodResolver(loginFormSchema),

@@ -1,12 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LoginMemberContext } from "@/stores/auth/loginMember";
+import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 import { MessageCircle } from "lucide-react";
-import { use } from "react";
 
 export default function ClientPage() {
-  const { isLogin, loginMember } = use(LoginMemberContext);
+  const { isLogin, loginMember } = useGlobalLoginMember();
   const socialLoginForKakaoUrl = `http://localhost:8080/oauth2/authorization/kakao`;
   const redirectUrlAfterSocialLogin = "http://localhost:3000";
 

@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import client from "@/lib/backend/client";
-import { LoginMemberContext } from "@/stores/auth/loginMember";
+import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 import {
   LogOut,
   Menu,
@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 import Logo from "./Logo";
 import MeMenuButton from "./MeMenuButton";
 import ThemeToggleButton from "./ThemeToggleButton";
@@ -32,15 +31,7 @@ export default function NarrowHeaderContent({
   className?: string;
 }) {
   const router = useRouter();
-  const { isLogin, isAdmin, loginMember, removeLoginMember } =
-    use(LoginMemberContext);
-
-  const logout = () => {
-    client.DELETE("/api/v1/members/logout").then((res) => {
-      removeLoginMember();
-      router.replace("/");
-    });
-  };
+  const { isLogin, isAdmin, loginMember, logout } = useGlobalLoginMember();
 
   return (
     <div className={`${className} py-1`}>
@@ -70,20 +61,22 @@ export default function NarrowHeaderContent({
                 </DrawerClose>
               </li>
 
-              <li>
-                <DrawerClose asChild>
-                  <Button
-                    variant="link"
-                    className="w-full justify-start"
-                    asChild
-                  >
-                    <Link href="/post/list">
-                      <Pencil />
-                      작성
-                    </Link>
-                  </Button>
-                </DrawerClose>
-              </li>
+              {isLogin && (
+                <li>
+                  <DrawerClose asChild>
+                    <Button
+                      variant="link"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <Link href="/post/list">
+                        <Pencil />
+                        작성
+                      </Link>
+                    </Button>
+                  </DrawerClose>
+                </li>
+              )}
 
               <li className="py-2">
                 <hr />
@@ -101,20 +94,22 @@ export default function NarrowHeaderContent({
                 </DrawerClose>
               </li>
 
-              <li>
-                <DrawerClose asChild>
-                  <Button
-                    variant="link"
-                    className="w-full justify-start"
-                    asChild
-                  >
-                    <Link href="/member/me">
-                      <User />
-                      {loginMember.nickname}
-                    </Link>
-                  </Button>
-                </DrawerClose>
-              </li>
+              {isLogin && (
+                <li>
+                  <DrawerClose asChild>
+                    <Button
+                      variant="link"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <Link href="/member/me">
+                        <User />
+                        {loginMember.nickname}
+                      </Link>
+                    </Button>
+                  </DrawerClose>
+                </li>
+              )}
 
               {isAdmin && (
                 <li>
@@ -136,7 +131,10 @@ export default function NarrowHeaderContent({
               {isLogin && (
                 <li>
                   <DrawerClose asChild>
-                    <Button variant="link" onClick={logout}>
+                    <Button
+                      variant="link"
+                      onClick={() => logout(() => router.replace("/"))}
+                    >
                       <LogOut />
                       로그아웃
                     </Button>

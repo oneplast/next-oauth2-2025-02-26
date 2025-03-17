@@ -2,14 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import client from "@/lib/backend/client";
-import MeMenuButton from "@/lib/business/components/MeMenuButton";
 import NarrowHeaderContent from "@/lib/business/components/NarrowHeaderContent";
-import ThemeToggleButton from "@/lib/business/components/ThemeToggleButton";
 import WideHeaderContent from "@/lib/business/components/WideHeaderContent";
 import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
-import { Copyright, Home, LogIn, LogOut, Settings, User } from "lucide-react";
+import { Copyright, LogIn } from "lucide-react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -27,12 +24,14 @@ export function ClientLayout({
     isLoginMemberPending,
     isAdmin,
     setNoLoginMember,
+    logout,
   } = useLoginMember();
 
   const loginMemberContextValue = {
     loginMember,
     setLoginMember,
     removeLoginMember,
+    logout,
     isLogin,
     isLoginMemberPending,
     isAdmin,

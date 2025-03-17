@@ -26,12 +26,14 @@ export default function WideHeaderContent({
           <TableOfContents />글
         </Link>
       </Button>
-      <Button variant="link" asChild>
-        <Link href="/post/list">
-          <Pencil />
-          작성
-        </Link>
-      </Button>
+      {isLogin && (
+        <Button variant="link" asChild>
+          <Link href="/post/list">
+            <Pencil />
+            작성
+          </Link>
+        </Button>
+      )}
       <div className="flex-grow"></div>
       {isLogin && <MeMenuButton />}
       <ThemeToggleButton />

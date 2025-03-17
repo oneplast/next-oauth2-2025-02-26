@@ -8,23 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import client from "@/lib/backend/client";
-import { LoginMemberContext } from "@/stores/auth/loginMember";
+import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 import { LogOut, MonitorCog, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 
 export default function MeMenuButton() {
   const router = useRouter();
 
-  const { isAdmin, loginMember, removeLoginMember } = use(LoginMemberContext);
+  const { isAdmin, loginMember, logout: _logout } = useGlobalLoginMember();
 
   const logout = () => {
-    client.DELETE("/api/v1/members/logout").then((res) => {
-      removeLoginMember();
-      router.replace("/");
-    });
+    _logout(() => router.replace("/"));
   };
 
   return (
