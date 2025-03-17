@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { LoginMemberContext } from "@/stores/auth/loginMember";
-import { Menu, Triangle } from "lucide-react";
-import Link from "next/link";
+import { Menu } from "lucide-react";
 import { use } from "react";
+import Logo from "./Logo";
 import MeMenuButton from "./MeMenuButton";
 import ThemeToggleButton from "./ThemeToggleButton";
 
@@ -21,9 +21,7 @@ export default function NarrowHeaderContent({
         <Menu />
       </Button>
       <Button variant="link" asChild>
-        <Link href="/">
-          <Triangle />
-        </Link>
+        <Logo />
       </Button>
       <div className="flex-grow"></div>
       {isLogin && <MeMenuButton />}
