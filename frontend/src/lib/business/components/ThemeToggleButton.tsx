@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Moon, Sun } from "lucide-react";
+import { MonitorCheck, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export default function ThemeToggleButton() {
@@ -22,13 +22,22 @@ export default function ThemeToggleButton() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          <Button variant="link" className="w-full justify-start">
+            <Sun />
+            밝음
+          </Button>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          <Button variant="link" className="w-full justify-start">
+            <Moon />
+            어둠
+          </Button>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          <Button variant="link" className="w-full justify-start">
+            <MonitorCheck />
+            기본
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
