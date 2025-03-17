@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import client from "@/lib/backend/client";
 import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 import { LogOut, MonitorCog, User } from "lucide-react";
 import Image from "next/image";

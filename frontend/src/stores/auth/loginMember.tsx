@@ -22,7 +22,7 @@ export const LoginMemberContext = createContext<{
   isLogin: false,
   isLoginMemberPending: true,
   isAdmin: false,
-  logout: (callback: () => void) => {},
+  logout: () => {},
   setNoLoginMember: () => {},
 });
 
@@ -58,7 +58,7 @@ export function useLoginMember() {
   const isAdmin = loginMember.id === 2;
 
   const logout = (callback: () => void) => {
-    client.DELETE("/api/v1/members/logout").then((res) => {
+    client.DELETE("/api/v1/members/logout").then(() => {
       removeLoginMember();
       callback();
     });

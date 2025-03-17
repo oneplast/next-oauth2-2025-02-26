@@ -61,7 +61,7 @@ export default function LoginForm() {
       setLoginMember(response.data.data.item);
 
       router.replace("/");
-    } catch (error) {
+    } catch {
       toast.error("로그인 중 오류가 발생했습니다.");
     }
   };

@@ -9,7 +9,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import client from "@/lib/backend/client";
 import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 import {
   LogOut,

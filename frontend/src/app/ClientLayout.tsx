@@ -8,14 +8,11 @@ import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
 import { Copyright, LogIn } from "lucide-react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 export function ClientLayout({
   children,
 }: React.ComponentProps<typeof NextThemesProvider>) {
-  const router = useRouter();
-
   const {
     setLoginMember,
     isLogin,
@@ -39,13 +36,18 @@ export function ClientLayout({
   };
 
   useEffect(() => {
-    client.GET("/api/v1/members/me").then((res) => {
-      if (res.error) {
-        setNoLoginMember();
-      } else {
-        setLoginMember(res.data);
-      }
-    });
+    const fetchMember = () => {
+      client.GET("/api/v1/members/me").then((res) => {
+        if (res.error) {
+          setNoLoginMember();
+        } else {
+          setLoginMember(res.data);
+        }
+      });
+    };
+
+    fetchMember();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoginMemberPending) {
