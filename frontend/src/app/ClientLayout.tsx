@@ -14,6 +14,7 @@ import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import Image from "next/image";
 
 function ModelToggle() {
   const { setTheme } = useTheme();
@@ -121,9 +122,13 @@ export function ClientLayout({
               <Link href="/member/me">
                 <User />
                 {loginMember.nickname}
-                <img
-                  className="w-8 h-8 rounded-full object-cover"
+                <Image
+                  className="rounded-full"
                   src={loginMember.profileImgUrl}
+                  alt={loginMember.nickname}
+                  width={32}
+                  height={32}
+                  quality={100}
                 />
               </Link>
             </Button>
