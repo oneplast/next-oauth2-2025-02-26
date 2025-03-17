@@ -1,12 +1,12 @@
 package com.ll.domain.member.member.entity;
 
 import com.ll.global.jpa.entity.BaseTime;
+import com.ll.util.Ut;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,6 +72,6 @@ public class Member extends BaseTime {
     }
 
     public String getProfileImgUrlOrDefault() {
-        return Objects.requireNonNullElse(profileImgUrl, "https://placehold.co/640x640?text=O_O");
+        return Ut.str.isBlank(profileImgUrl) ? "https://placehold.co/640x640?text=O_O" : profileImgUrl;
     }
 }
