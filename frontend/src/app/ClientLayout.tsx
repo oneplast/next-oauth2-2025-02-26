@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import client from "@/lib/backend/client";
+import MeMenuButton from "@/lib/business/components/MeMenuButton";
 import ThemeToggleButton from "@/lib/business/components/ThemeToggleButton";
 import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
 import { Home, LogIn, LogOut, Settings, User } from "lucide-react";
@@ -54,13 +55,6 @@ export function ClientLayout({
     );
   }
 
-  const logout = () => {
-    client.DELETE("/api/v1/members/logout").then((res) => {
-      removeLoginMember();
-      router.replace("/");
-    });
-  };
-
   return (
     <NextThemesProvider
       attribute="class"
@@ -76,39 +70,6 @@ export function ClientLayout({
             </Link>
           </Button>
 
-          {isAdmin && (
-            <Button variant="link" asChild>
-              <Link href="/adm">
-                <Settings />
-                관리자
-              </Link>
-            </Button>
-          )}
-
-          {isLogin && (
-            <Button variant="link" asChild>
-              <Link href="/member/me">
-                <User />
-                {loginMember.nickname}
-                <Image
-                  className="rounded-full"
-                  src={loginMember.profileImgUrl}
-                  alt={loginMember.nickname}
-                  width={32}
-                  height={32}
-                  quality={100}
-                />
-              </Link>
-            </Button>
-          )}
-
-          {isLogin && (
-            <Button variant="link" onClick={logout}>
-              <LogOut />
-              로그아웃
-            </Button>
-          )}
-
           {!isLogin && (
             <Button variant="link" asChild>
               <Link href="/adm/member/login">
@@ -117,6 +78,7 @@ export function ClientLayout({
             </Button>
           )}
           <div className="flex-grow"></div>
+          {isLogin && <MeMenuButton />}
           <ThemeToggleButton />
         </header>
         <main className="flex-1 flex flex-col">{children}</main>
