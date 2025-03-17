@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 
@@ -33,8 +32,8 @@ export default function NarrowHeaderContent({
 }: {
   className?: string;
 }) {
-  const router = useRouter();
-  const { isLogin, isAdmin, loginMember, logout } = useGlobalLoginMember();
+  const { isLogin, isAdmin, loginMember, logoutAndHome } =
+    useGlobalLoginMember();
 
   return (
     <div className={`${className} py-1`}>
@@ -134,10 +133,7 @@ export default function NarrowHeaderContent({
               {isLogin && (
                 <li>
                   <DrawerClose asChild>
-                    <Button
-                      variant="link"
-                      onClick={() => logout(() => router.replace("/"))}
-                    >
+                    <Button variant="link" onClick={logoutAndHome}>
                       <LogOut />
                       로그아웃
                     </Button>

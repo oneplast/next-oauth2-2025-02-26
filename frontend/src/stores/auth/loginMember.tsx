@@ -2,6 +2,8 @@
 
 import { createContext, use, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import client from "@/lib/backend/client";
 
 import { components } from "@/lib/backend/apiV1/schema";
@@ -11,20 +13,20 @@ type Member = components["schemas"]["MemberDto"];
 export const LoginMemberContext = createContext<{
   loginMember: Member;
   setLoginMember: (member: Member) => void;
-  removeLoginMember: () => void;
   isLogin: boolean;
   isLoginMemberPending: boolean;
   isAdmin: boolean;
   logout: (callback: () => void) => void;
+  logoutAndHome: () => void;
   setNoLoginMember: () => void;
 }>({
   loginMember: createEmptyMember(),
   setLoginMember: () => {},
-  removeLoginMember: () => {},
   isLogin: false,
   isLoginMemberPending: true,
   isAdmin: false,
   logout: () => {},
+  logoutAndHome: () => {},
   setNoLoginMember: () => {},
 });
 
@@ -39,6 +41,8 @@ function createEmptyMember(): Member {
 }
 
 export function useLoginMember() {
+  const router = useRouter();
+
   const [isLoginMemberPending, setLoginMemberPending] = useState(true);
   const [loginMember, _setLoginMember] = useState<Member>(createEmptyMember);
 
@@ -66,15 +70,19 @@ export function useLoginMember() {
     });
   };
 
+  const logoutAndHome = () => {
+    logout(() => router.replace("/"));
+  };
+
   return {
     loginMember,
-    logout,
-    removeLoginMember,
-    isLogin,
     isLoginMemberPending,
     setLoginMember,
-    isAdmin,
     setNoLoginMember,
+    isLogin,
+    isAdmin,
+    logout,
+    logoutAndHome,
   };
 }
 

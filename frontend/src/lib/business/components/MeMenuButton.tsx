@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 
@@ -17,13 +16,7 @@ import {
 import { LogOut, MonitorCog, User } from "lucide-react";
 
 export default function MeMenuButton() {
-  const router = useRouter();
-
-  const { isAdmin, loginMember, logout: _logout } = useGlobalLoginMember();
-
-  const logout = () => {
-    _logout(() => router.replace("/"));
-  };
+  const { isAdmin, loginMember, logoutAndHome } = useGlobalLoginMember();
 
   return (
     <DropdownMenu>
@@ -59,7 +52,7 @@ export default function MeMenuButton() {
           </DropdownMenuItem>
         )}
         <DropdownMenuItem>
-          <Button variant="link" onClick={logout}>
+          <Button variant="link" onClick={logoutAndHome}>
             <LogOut />
             로그아웃
           </Button>
