@@ -30,13 +30,13 @@ export default function RootLayout({
       className={`${pretendard.variable}`}
       suppressHydrationWarning
     >
-      <body
-        className={`${pretendard.className} antialiased flex flex-col min-h-[100dvh]`}
-      >
-        <ClientLayout>
-          {children}
-          <Toaster position="top-center" />
-        </ClientLayout>
+      <body className={`${pretendard.className} antialiased`}>
+        <div className="flex flex-col min-h-[100dvh] bg-background">
+          <ClientLayout>
+            {children}
+            <Toaster position="top-center" />
+          </ClientLayout>
+        </div>
       </body>
     </html>
   );
