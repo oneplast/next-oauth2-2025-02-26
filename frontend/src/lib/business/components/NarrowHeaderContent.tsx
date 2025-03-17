@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
@@ -18,12 +19,12 @@ import {
   TableOfContents,
   User,
 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 import Logo from "./Logo";
 import MeMenuButton from "./MeMenuButton";
 import ThemeToggleButton from "./ThemeToggleButton";
-import Link from "next/link";
 
 export default function NarrowHeaderContent({
   className,
@@ -56,58 +57,90 @@ export default function NarrowHeaderContent({
           <div className="max-h-[calc(100dvh-150px)] px-2 pb-2 overflow-y-auto">
             <ul>
               <li>
-                <Button variant="link" className="w-full justify-start" asChild>
-                  <Link href="/post/list">
-                    <TableOfContents />글
-                  </Link>
-                </Button>
-              </li>
-
-              <li>
-                <Button variant="link" className="w-full justify-start" asChild>
-                  <Link href="/post/list">
-                    <Pencil />
-                    작성
-                  </Link>
-                </Button>
-              </li>
-
-              <li>
-                <Button variant="link" className="w-full justify-start" asChild>
-                  <Logo text />
-                </Button>
-              </li>
-
-              <li>
-                <Button variant="link" className="w-full justify-start" asChild>
-                  <Link href="/member/me">
-                    <User />
-                    {loginMember.nickname}
-                  </Link>
-                </Button>
-              </li>
-
-              {isAdmin && (
-                <li>
+                <DrawerClose asChild>
                   <Button
                     variant="link"
                     className="w-full justify-start"
                     asChild
                   >
-                    <Link href="/adm">
-                      <MonitorCog />
-                      관리자 홈
+                    <Link href="/post/list">
+                      <TableOfContents />글
                     </Link>
                   </Button>
+                </DrawerClose>
+              </li>
+
+              <li>
+                <DrawerClose asChild>
+                  <Button
+                    variant="link"
+                    className="w-full justify-start"
+                    asChild
+                  >
+                    <Link href="/post/list">
+                      <Pencil />
+                      작성
+                    </Link>
+                  </Button>
+                </DrawerClose>
+              </li>
+
+              <li className="py-2">
+                <hr />
+              </li>
+
+              <li>
+                <DrawerClose asChild>
+                  <Button
+                    variant="link"
+                    className="w-full justify-start"
+                    asChild
+                  >
+                    <Logo text />
+                  </Button>
+                </DrawerClose>
+              </li>
+
+              <li>
+                <DrawerClose asChild>
+                  <Button
+                    variant="link"
+                    className="w-full justify-start"
+                    asChild
+                  >
+                    <Link href="/member/me">
+                      <User />
+                      {loginMember.nickname}
+                    </Link>
+                  </Button>
+                </DrawerClose>
+              </li>
+
+              {isAdmin && (
+                <li>
+                  <DrawerClose asChild>
+                    <Button
+                      variant="link"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <Link href="/adm">
+                        <MonitorCog />
+                        관리자 홈
+                      </Link>
+                    </Button>
+                  </DrawerClose>
                 </li>
               )}
 
               {isLogin && (
                 <li>
-                  <Button variant="link" onClick={logout}>
-                    <LogOut />
-                    로그아웃
-                  </Button>
+                  <DrawerClose asChild>
+                    <Button variant="link" onClick={logout}>
+                      <LogOut />
+                      로그아웃
+                    </Button>
+                  </DrawerClose>
                 </li>
               )}
             </ul>
