@@ -76,10 +76,10 @@ export default {
           ({ modifySelectors }: { modifySelectors: any }) => {
             modifySelectors(({ className }: { className: any }) => {
               return `.${selector}.on .${escapeClassName(
-                variantName
+                variantName,
               )}\\:${escapeClassName(className)}`;
             });
-          }
+          },
         );
       };
       // peer-on 변형 추가 함수
@@ -91,10 +91,10 @@ export default {
           ({ modifySelectors }: { modifySelectors: any }) => {
             modifySelectors(({ className }: { className: any }) => {
               return `.${selector}.on ~ .${escapeClassName(
-                variantName
+                variantName,
               )}\\:${escapeClassName(className)}`;
             });
-          }
+          },
         );
       };
       // 기본 group-on, peer-on 변형 추가

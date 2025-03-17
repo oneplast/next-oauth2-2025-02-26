@@ -1,8 +1,10 @@
 "use client";
 
-import { components } from "@/lib/backend/apiV1/schema";
-import client from "@/lib/backend/client";
 import { createContext, use, useState } from "react";
+
+import client from "@/lib/backend/client";
+
+import { components } from "@/lib/backend/apiV1/schema";
 
 type Member = components["schemas"]["MemberDto"];
 

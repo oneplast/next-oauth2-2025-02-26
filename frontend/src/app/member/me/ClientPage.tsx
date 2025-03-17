@@ -1,7 +1,8 @@
 "use client";
 
-import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 import Image from "next/image";
+
+import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 
 export default function ClientPage() {
   const { loginMember } = useGlobalLoginMember();
