@@ -1,47 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import client from "@/lib/backend/client";
+import ThemeToggleButton from "@/lib/business/components/ThemeToggleButton";
 import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
-import { Home, LogIn, LogOut, Moon, Settings, Sun, User } from "lucide-react";
-import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
+import { Home, LogIn, LogOut, Settings, User } from "lucide-react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import Image from "next/image";
-
-function ModelToggle() {
-  const { setTheme } = useTheme();
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">테마</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
 
 export function ClientLayout({
   children,
@@ -149,7 +117,7 @@ export function ClientLayout({
             </Button>
           )}
           <div className="flex-grow"></div>
-          <ModelToggle />
+          <ThemeToggleButton />
         </header>
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="p-2 flex justify-center">
