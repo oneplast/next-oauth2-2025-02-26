@@ -5,7 +5,7 @@ import client from "@/lib/backend/client";
 import MeMenuButton from "@/lib/business/components/MeMenuButton";
 import ThemeToggleButton from "@/lib/business/components/ThemeToggleButton";
 import { LoginMemberContext, useLoginMember } from "@/stores/auth/loginMember";
-import { Home, LogIn, LogOut, Settings, User } from "lucide-react";
+import { Copyright, Home, LogIn, LogOut, Settings, User } from "lucide-react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,21 +69,26 @@ export function ClientLayout({
               <Home />홈
             </Link>
           </Button>
-
-          {!isLogin && (
-            <Button variant="link" asChild>
-              <Link href="/adm/member/login">
-                <LogIn /> 관리자 로그인
-              </Link>
-            </Button>
-          )}
           <div className="flex-grow"></div>
           {isLogin && <MeMenuButton />}
           <ThemeToggleButton />
         </header>
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="p-2 flex justify-center">
-          <span>© 2025 글로그</span>
+          <Button variant="link" asChild>
+            <Link href="/">
+              <Copyright />
+              2025 글로그
+            </Link>
+          </Button>
+          {!isLogin && (
+            <Button variant="link" asChild>
+              <Link href="/adm/member/login">
+                <LogIn />
+                관리자 로그인
+              </Link>
+            </Button>
+          )}
         </footer>
       </LoginMemberContext>
     </NextThemesProvider>
