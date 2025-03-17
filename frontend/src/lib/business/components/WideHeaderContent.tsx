@@ -22,7 +22,7 @@ export default function WideHeaderContent({
   const { isLogin } = use(LoginMemberContext);
 
   return (
-    <div className={`${className} py-1`}>
+    <div className={`${className}  container mx-auto py-1`}>
       <Button variant="link" asChild>
         <Logo text />
       </Button>

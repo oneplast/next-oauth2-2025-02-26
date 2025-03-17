@@ -74,8 +74,8 @@ export function ClientLayout({
     >
       <LoginMemberContext value={loginMemberContextValue}>
         <header>
-          <NarrowHeaderContent className="flex lg:hidden" />
-          <WideHeaderContent className="hidden lg:flex" />
+          <NarrowHeaderContent className="flex sm:hidden" />
+          <WideHeaderContent className="hidden sm:flex" />
         </header>
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="p-2 flex justify-center">
